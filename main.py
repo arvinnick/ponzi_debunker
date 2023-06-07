@@ -1,5 +1,15 @@
 import matplotlib.pyplot as plt
-
+import arabic_reshaper
+from bidi.algorithm import get_display
+class persianWriting():
+    """
+    Class containing the persian texts. source of the __str__ function:
+    https://virgool.io/@vakily/%D9%81%D8%A7%D8%B1%D8%B3%DB%8C-%D9%86%D9%88%DB%8C%D8%B3%DB%8C-%D8%B1%D9%88%DB%8C-%D9%86%D9%85%D9%88%D8%AF%D8%A7%D8%B1-%D9%87%D8%A7-%D8%AF%D8%B1-matplotlib-winluz8b4fjz
+    """
+    def __init__(self, text):
+        self.text = text
+    def __str__(self):
+        return get_display(arabic_reshaper.reshape(u'%s' %str(self.text)))
 
 def main() -> None:
     """
@@ -37,11 +47,11 @@ def main() -> None:
         total = total+(total*interest_rate)
 
     plt.plot(cumsum_total)
-    plt.xlabel("ماه")
-    plt.ylabel("پولی که تو ماه داری")
+    plt.xlabel(str(persianWriting("ماه")))
+    plt.ylabel(str(persianWriting("پولی که هر ماه تو حسابت خواهد بود")))
     plt.xticks([i for i in range(len(cumsum_total))])
     plt.yticks(cumsum_total)
-    plt.title(" :جمع پولی که بعد از این مدت داری" + str(cumsum_total[-1]))
+    plt.title(str(cumsum_total[-1]) + str(persianWriting("اگه قول طرف درست باشه آخرش این قدر پول خواهی داشت:")))
     plt.show()
 
 

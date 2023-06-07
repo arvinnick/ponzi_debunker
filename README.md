@@ -3,6 +3,9 @@ This is just an attempt to show the real math behind all "no risk investment" sc
 In the current version you just need to run this script on the root of the project:
 ```shell
 conda env create -n ponzi --file env.yml
+conda activate ponzi
+conda install -c conda-forge arabic_reshaper
+conda install -c conda-forge python-bidi
 python main.py
 ```
 
