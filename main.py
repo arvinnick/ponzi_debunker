@@ -1,4 +1,7 @@
+import datetime
+
 import matplotlib.pyplot as plt
+import pandas as pd
 import arabic_reshaper
 from bidi.algorithm import get_display
 class persianWriting():
@@ -39,18 +42,18 @@ def main() -> None:
             print("فقط عدد به انگلیسی باشه لطفا")
             continue
 
-    cumsum_total = []
-    interest_rate = float(interest_rate/100)
+    now = datetime.datetime.today()
+    then = now + datetime.timedelta(days=(duration * 30))
+    interest_rate = float(interest_rate / 100)
+    duration = pd.date_range(now, then, freq='1M')
     total = deposit
-    for i in range(duration):
+    cumsum_total = []
+    for i in range(len(duration)):
         cumsum_total.append(total)
         total = total+(total*interest_rate)
-
-    plt.plot(cumsum_total)
-    plt.xlabel(str(persianWriting("ماه")))
-    plt.ylabel(str(persianWriting("پولی که هر ماه تو حسابت خواهد بود")))
-    plt.xticks([i for i in range(len(cumsum_total))])
-    plt.yticks(cumsum_total)
+    cumsum_total = pd.Series(cumsum_total, index=duration)
+    cumsum_total.plot()
+    plt.xlabel(str(persianWriting("تاریخ")))
     plt.title(str(cumsum_total[-1]) + str(persianWriting("اگه قول طرف درست باشه آخرش این قدر پول خواهی داشت:")))
     plt.show()
 
